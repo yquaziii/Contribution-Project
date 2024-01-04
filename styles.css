@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.contribution-chart {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    max-width: 300px;
+}
+
+.day {
+    text-align: center;
+    padding: 5px;
+    background-color: #ddd;
+}
+
+.contribution-day {
+    width: 30px;
+    height: 30px;
+    margin: 2px;
+    background-color: #4CAF50; /* You can change this color based on contribution count */
+    border-radius: 4px;
+}
