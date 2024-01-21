@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Code Editor</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    #editor {
+      width: 100%;
+      height: 100vh;
+    }
+
+    #saveButton, #newTabButton, #clearButton {
+      padding: 10px;
+      margin: 5px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #tabList {
+      display: flex;
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .tab {
+      padding: 8px;
+      margin-right: 5px;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .active-tab {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+<button id="saveButton" onclick="saveFile()">Save</button>
+<button id="newTabButton" onclick="newTab()">New Tab</button>
+<button id="clearButton" onclick="clearBuffer()">Clear Buffer</button>
+
+<ul id="tabList"></ul>
+<div id="editor" contenteditable="true"></div>
+
+<script>
+  let activeTabId = 1;
+  const tabs = {};
+
+  document.addEventListener("DOMContentLoaded", function() {
+    loadTabList();
+    loadFile(activeTabId);
+  });
+
+  function saveFile() {
+    const content = document.getElementById("editor").innerText;
+    localStorage.setItem(`tab${activeTabId}`, content);
+    alert("File saved successfully!");
+  }
+
+  function loadFile(tabId) {
+    activeTabId = tabId;
+    const content = localStorage.getItem(`tab${activeTabId}`);
+    if (content) {
+      document.getElementById("editor").innerText = content;
+    }
+    updateTabList();
+  }
+
+  function newTab() {
+    const newTabId = Object.keys(tabs).length + 1;
+    tabs[newTabId] = true;
+    activeTabId = newTabId;
+    loadFile(activeTabId);
+  }
+
+  function clearBuffer() {
+    localStorage.removeItem(`tab${activeTabId}`);
+    document.getElementById("editor").innerText = "";
+    alert("Buffer cleared successfully!");
+  }
+
+  function loadTabList() {
+    const tabList = document.getElementById("tabList");
+    tabList.innerHTML = "";
+
+    for (const tabId in tabs) {
+      const tabElement = document.createElement("li");
+      tabElement.classList.add("tab");
+      if (tabId == activeTabId) {
+        tabElement.classList.add("active-tab");
+      }
+      tabElement.innerText = `Tab ${tabId}`;
+      tabElement.addEventListener("click", () => loadFile(tabId));
+      tabList.appendChild(tabElement);
+    }
+  }
+
+  function updateTabList() {
+    const tabList = document.getElementById("tabList");
+    const tabsElements = tabList.getElementsByClassName("tab");
+    for (const tabElement of tabsElements) {
+      const tabId = parseInt(tabElement.innerText.replace("Tab ", ""));
+      if (tabId == activeTabId) {
+        tabElement.classList.add("active-tab");
+      } else {
+        tabElement.classList.remove("active-tab");
+      }
+    }
+  }
+</script>
+
+</body>
+</html>
