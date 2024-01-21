@@ -1,2 +1,2 @@
-Debug Dystopia is a tongue-in-cheek coding and development project that turns the often meticulous and serious world of software development into a playful adventure. 
-This project is a unique blend of coding challenges, unconventional problem-solving, and a touch of dystopian humor.
+**Code Editor & Notes App** 🚀  
+A web-based code editor with multi-tab support and note-taking features. Save and download your work easily. Perfect for quick coding and jotting down ideas. 📝💻
